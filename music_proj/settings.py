@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 
+import environ
+
+env = environ.Env()
+environ.Env.read_env(env_file=Path('./.env'))
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+jgwn9q6dfuya4=m)y(w04%4-sfw1rtplz9r6jjmx896)607#i'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
