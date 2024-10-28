@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <!-- Categories Section -->
+    <section class="categories">
+        <h2>Categories</h2>
+        <ul>
+            {% for category in categories %}
+            <li>
+                <a href="#" class="category-link" data-slug="{{ category.slug }}">{{ category.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- Tracks Section -->
+    <section class="tracks">
+        <h2>Tracks</h2>
+        <div class="track-list">
+            {% for track in tracks %}
+            <div class="track">
+                <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
+                <div class="track-info">
+                    <h3>{{ track.title }}</h3>
+                    <p>Artist: <a href="#">{{ track.artist.name }}</a></p>
+                    <audio controls>
+                        <source src="{{ track.audio_file.url }}" type="audio/mpeg">
+                        Your browser does not support the audio tag.
+                    </audio>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryLinks = document.querySelectorAll('.category-link');
+
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); // Предотвращаем стандартное поведение ссылки
+
+                // Удаляем активный класс у всех категорий и добавляем к текущей
+                categoryLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                // Получаем slug категории из data-атрибута
+                const slug = this.getAttribute('data-slug');
+
+                // Делаем AJAX-запрос для получения треков
+                fetch(`/load-tracks/${slug}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const trackList = document.querySelector('.track-list');
+                        trackList.innerHTML = ''; // Очищаем текущие треки
+
+                        // Добавляем новые треки в разметку
+                        data.tracks.forEach(track => {
+                            trackList.innerHTML += `
+                                <div class="track">
+                                    <img src="${track.cover_image}" alt="${track.title} cover image">
+                                    <div class="track-info">
+                                        <h3>${track.title}</h3>
+                                        <p>Artist: <a href="#">${track.artist}</a></p>
+                                        <p>Category: <a href="#">${track.category}</a></p>
+                                        <p>Duration: ${track.duration}</p>
+                                        <audio controls>
+                                            <source src="${track.audio_file}" type="audio/mpeg">
+                                            Your browser does not support the audio tag.
+                                        </audio>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    })
+                    .catch(error => console.error('Error fetching tracks:', error));
+            });
+        });
+    });
+</script>
+{% endblock %}
