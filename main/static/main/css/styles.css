@@ -176,7 +176,226 @@ footer {
   }
 
 /* -----------------Стили для системы авторизации, регистрации...------------------- */
+form {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    overflow: hidden;
+}
 
+form h1 {
+    margin-bottom: 10px;
+    margin-left: 0px;
+    font-weight: 300;
+    text-align: center;
+    color: #000;
+}
+
+form p {
+    height: 25px;
+    max-height: 25px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 18px;
+    flex-wrap: nowrap;
+}
+
+form p label {
+    flex: 1;
+    text-align: start;
+    margin: 0 !important;
+    color: #fff;
+    white-space: nowrap;
+}
+
+form p input, form p textarea {
+    flex: 2;
+    border: none;
+    border-radius: 3px;
+    border: none;
+    text-align: center;
+}
+
+form p select {
+    min-width: 220px;
+    width: 321px;
+    max-width: 321px;
+    height: 25px;
+    border-radius: 3px;
+    color: #000;
+}
+
+form hr {margin: 10px 0px;}
+
+form button {
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    background: white;
+    font-weight: 400;
+    font-size: 15px;
+    border: none;
+}
+
+form button:hover {
+    box-shadow: 1px 1px 10px white;
+}
+
+form button:active {
+    box-shadow: none;
+}
+
+form .link-form {
+    text-align: start;
+}
+
+form a:hover, .change-password a:hover {text-shadow: 1px 1px 5px white;}
+
+.form-error {
+    color: rgb(255, 0, 0);
+    white-space: nowrap;
+    font-size: 18px;
+}
+
+.form-button {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.user-form-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profile {
+    min-width: 350px;
+    width: 500px;
+    height: auto;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.profile form, .user-form form {border: 1px solid #000;}
+
+.profile-image {
+    text-align: center;
+    width: 100%;
+    height: auto;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+#id_date_birth_year, #id_date_birth_month, #id_date_birth_day {
+    min-width: 60px;
+    width: 107px;
+    max-width: 107px;
+    min-height: 25px;
+    height: 25px;
+    max-height: 25px;
+    flex-wrap: wrap;
+    text-align-last: center;
+}
+
+input[type="file"] {display: none;}
+
+.profile form p:first-of-type label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.fa-user-circle {
+    min-width: 180px;
+    width: 321px;
+    height: 26px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all .5s;
+    text-align: center;
+}
+
+.fa-user-circle:hover {
+    background-color: rgba(0, 0, 0, .5);
+    color: #7a0b0b;
+}
+
+.fa-user-circle:hover .image-text {
+    color: #fff;
+}
+
+.image-text {
+    font-size: 16px;
+    color: #a8a8a8;
+    margin-left: 10px;
+    position: relative;
+    top: -3px;
+    font-weight: 200;
+}
+
+#id_gender {
+    flex: 2;
+    text-align-last: center;
+    width: 321px;
+    max-width: 321px;
+    min-height: 25px;
+    height: 25px;
+    max-height: 25px;
+}
+
+.profile form button {
+    width: 120px;
+    font-size: 16px;
+    transition: all .5s;
+}
+
+.user-form {
+    min-width: 350px;
+    width: 500px;
+    height: auto;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.change-password {
+    width: auto;
+    background-color: rgba(0, 0, 0, .6);
+    border: 1px solid black;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px;
+}
+
+.change-password a {
+    color: #740202;
+    font-weight: 400;
+}
+
+.errorlist {
+    /* font-display: flex; */
+    width: 100%;
+    text-wrap: wrap;
+    margin-bottom: 10px;
+    color: #cf0000;
+}
 
 /* -------------------Стили для главной страницы------------------------ */
 h1 {
