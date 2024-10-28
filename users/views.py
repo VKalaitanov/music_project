@@ -35,7 +35,7 @@ class LoginUserView(LoginView):
     form_class = LoginUserForm
     template_name = 'users/login.html'
     extra_context = {'title': 'Авторизация'}
-    next_page = 'moderno:home'
+    next_page = 'main:home'
 
 
 def logout_user(request):
