@@ -1,0 +1,51 @@
+# Файлы окружения
+.env
+*.env
+
+# Базовые файлы ОС
+.DS_Store
+Thumbs.db
+
+# Python файлы и кеши
+*.py[cod]
+__pycache__/
+*.so
+
+# Логи и временные файлы
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+
+# Миграции и базы данных
+db.sqlite3
+*/migrations/
+
+# Секретные ключи, настройки и файлы виртуального окружения
+.vscode/
+.idea/
+*.swp
+*.swo
+venv/
+env/
+ENV/
+venv.bak/
+.venv/
+
+# Статические и медиа-файлы
+staticfiles/
+media/
+
+# Django файловые папки
+*.pyc
+*.pyo
+*.pyd
+
+# Сторонние зависимости
+node_modules/
+bower_components/
+
+# Конфигурации Docker
+docker-compose.yml
+Dockerfile

@@ -1,0 +1,380 @@
+* {
+    padding: 0;
+    margin: 0;
+    /* outline: 2px solid green !important; */
+}
+
+html {height: 100%;}
+button {cursor: pointer;}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+body {
+    width: 100%;
+    height: auto;
+    padding: 50px;
+    font-family: sans-serif;
+    font-weight: 300;
+    background: url('../images/background.jpg.avif') no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.body-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #181818;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 20px 50px 7px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 20px 50px 7px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 20px 50px 7px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+/* ----------------------Стили для шапки сайта--------------------- */
+.header {
+    width: 100%;
+    min-height: 50px;
+    height: auto;
+    padding: 20px;
+    flex: 0 0 auto;
+    color: aliceblue;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    text-shadow: 5px 4px 4px black;
+    transition: all 1s ease;
+}
+
+.logo:hover{
+    transform: scale(1.1);
+    text-shadow: 2px 2px 4px black;
+}
+
+/* ----------------------------Стили для блока маин ----------------------*/
+.music-background {
+    width: 100%;
+    height: 350px;
+    border: none;
+    margin: 0; /* Сбрасываем отступы */
+    padding: 0; /* Сбрасываем поля */
+    background: url('../images/music.png') no-repeat center center; 
+    background-size: cover; /* Изображение занимает весь контейнер */
+    z-index: 10;
+}
+
+/* .main {
+    padding: 30px;
+    display: flex;
+    flex: 1 0 auto;
+    
+} */
+
+/* ----------------------------Стили для футера-------------------------- */
+
+footer {
+    background-color: rgba(0, 0, 0, 0.4);
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+}
+
+.footer {
+    margin: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.footer > div {
+    flex: 1;
+}
+
+.footer div > span {color:white}
+
+.about-contacts {text-align: end;}
+
+.about-contacts a {margin-left: 5px;}
+
+.social ul {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .item a {
+    width: 32px;
+    height: 32px;
+    background-color: #f0f9fe;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    border: 2px solid #f0f9fe;
+    overflow: hidden;
+  }
+
+  .item a::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+    scale: 1 0;
+    transform-origin: bottom;
+    transition: scale 0.3s linear;
+  }
+
+  .item:hover a::before {scale: 1 1;}
+
+  .social-icon {
+    font-size: 24px;
+    color: hsl(203, 92%, 8%);
+    transition: 0.5s ease;
+    z-index: 2;
+  }
+
+  .item a:hover .social-icon {
+    color: #fff;
+    transform: rotateY(360deg);
+  }
+
+  .item:nth-child(1) {
+    --bg-color: linear-gradient(to bottom right, #f9ce34, #ee2a7b, #6228d7);
+  }
+  .item:nth-child(2) {
+    --bg-color: #0077b5;
+  }
+  .item:nth-child(3), .social-auth .item {
+    --bg-color: #000000;
+  }
+  .item:nth-child(4) {
+    --bg-color: #4ea7ec;
+  }
+
+/* -----------------Стили для системы авторизации, регистрации...------------------- */
+
+
+/* -------------------Стили для главной страницы------------------------ */
+h1 {
+    color: #c7c7c7;
+}
+
+.categories {
+    padding: 20px;
+    background-color: #181818;
+}
+
+.category-link.active {
+    font-weight: bold; /* Делаем текст жирным */
+    color: #007bff; /* Изменяем цвет текста */
+}
+
+.categories h2 {
+    font-size: 44px;
+    color: #ffffff;
+    text-shadow: 3px 4px 10px silver;
+    position: relative;
+    top: -70px;
+    z-index: 11;
+}
+
+.categories ul {
+    list-style: none;
+    padding: 0;
+}
+
+.categories ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.tracks {
+    padding: 20px;
+}
+
+.track-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.track {
+    min-width: 200px;
+    width: 250px;
+    height: 400px; 
+    background-color: #282828;
+    border-radius: 10px;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column; /
+}
+
+.track img {
+    width: 100%;
+    height: 60%; 
+    object-fit: cover; 
+    border-radius: 10px 10px 0 0; 
+}
+
+.track-info {
+    flex-grow: 1; 
+    padding: 10px; 
+    color: white; 
+}
+
+.track-info h3 {
+    margin: 0; 
+}
+
+audio {
+    width: 100%; 
+    margin-top: 10px; 
+    border-radius: 2px;
+}
+
+
+/* --------------------------Страница КОНТАКТЫ----------------------------- */
+
+.contacts {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.contacts-info, .contacts-map {
+   width: 550px;
+   height: 400px;
+   color: #fff;
+}
+
+.contacts-info {padding: 10px;}
+
+.contacts-info ul {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.contacts-info ul li {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.contacts-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.contacts-logo img {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+.contacts-logo span {
+    position: relative;
+    top: 10px;
+    font-size: 30px;
+    align-self: flex-end;
+}
+
+.contacts-map img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.feedback-block {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+}
+
+.feedback {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: all 0.4;
+    text-align: end;
+}
+
+.feedback img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.feedback-form form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 320px;
+}
+
+.feedback-form form .errorlist {
+    color: #ff0000;
+
+}
+
+.feedback-form form p {height: auto;}
+
+.feedback-form .form-button {
+    width: 100%;
+    position: absolute;
+    bottom: 15px;
+}
+
+.feedback-form .form-button button {margin: 10px 0 0 0;}
+.feedback-form .form-button button:hover {box-shadow: none !important;}
+
+.feedback-form form p textarea {
+    resize: none;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+.message {
+    position: absolute;
+    z-index: 10;
+    background-color: #1faa00;
+    color: #000;
+    font-weight: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 20px 30px;
+}
+
+
+
