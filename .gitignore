@@ -20,7 +20,8 @@ __pycache__/
 
 # Миграции и базы данных
 db.sqlite3
-migrations/*
+*/migrations/*.py
+!*/migrations/__init__.py
 
 # Секретные ключи, настройки и файлы виртуального окружения
 .vscode/
