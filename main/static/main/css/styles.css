@@ -665,5 +665,60 @@ audio {
     padding: 20px 30px;
 }
 
+/* -------------- DETAIL TRACK --------------*/
+.track-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #181818;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
 
+.track-cover img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.track-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 600px;
+    margin-left: 20px;
+}
+
+.track-artist {
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.track-category {
+    font-size: 18px;
+    font-weight: 300;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.track-audio {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+.track-duration {
+    font-size: 16px;
+    color: #ddd;
+    margin-top: 10px;
+}
 

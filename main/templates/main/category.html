@@ -8,6 +8,12 @@
         <div class="track-list">
             {% for track in tracks %}
             <div class="track">
+                {% if user.is_authenticated %}
+                <button onclick="showPlaylistsModal({{ track.id }})" class="btn btn-primary">Добавить в плейлист
+                </button>
+                {% else %}
+                <button class="btn btn-primary"><a href="{% url 'users:login' %}">Добавить в плейлист</a></button>
+                {% endif %}
                 <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
                 <div class="track-info">
                     <h3>{{ track.title }}</h3>

@@ -1,7 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView
 
+from my_playlists.models import Playlist
 from .models import Track, Category
 
 
@@ -19,9 +21,12 @@ class HomePage(ListView):
     def get_context_data(self, **kwargs):
         """Добавляем дополнительные данные в контекст"""
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()  # Получаем все категории
+        context['categories'] = Category.objects.all()
         context['title_page'] = self.title_page
+        context['playlists'] = \
+            Playlist.objects.filter(user=self.request.user) if self.request.user.is_authenticated else None
         return context
+
 
 class TrackListView(ListView):
     model = Track
@@ -39,24 +44,33 @@ class TrackListView(ListView):
         context['category'] = Category.objects.get(slug=self.kwargs.get('slug'))
         return context
 
+
+class DetailTrack(DetailView):
+    model = Track
+    template_name = 'main/detail_track.html'
+    context_object_name = 'track'
+
+
 def load_tracks(request, slug):
     tracks = Track.objects.filter(category__slug=slug).select_related('artist', 'category')
     track_list = []
 
     for track in tracks:
         track_list.append({
+            'id': track.id,
             'title': track.title,
             'artist': track.artist.name,
-            'category': track.category.name,
-            'duration': str(track.duration),
             'cover_image': track.cover_image.url,
-            'audio_file': track.audio_file.url
+            'is_authenticated': request.user.is_authenticated,
+            'login_url': reverse('users:login')
         })
 
     return JsonResponse({'tracks': track_list})
 
+
 def about(request):
     return render(request, 'main/about.html', {'title': 'Страница про нас'})
+
 
 def contacts(request):
     return render(request, 'main/contacts.html', {'title': 'Страница контакты'})
