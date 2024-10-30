@@ -5,8 +5,9 @@ from mutagen import File as MutagenFile
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    name = models.CharField('Название категории', max_length=100, unique=True)
+    slug = models.SlugField('Слаг', max_length=100, unique=True)
+    image = models.ImageField('Изображение категории', default=None, null=True)
 
     def __str__(self):
         return self.name

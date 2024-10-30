@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rubik+Wet+Paint&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -20,10 +22,14 @@ a {
 }
 
 body {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
     width: 100%;
     height: auto;
     padding: 50px;
-    font-family: sans-serif;
     font-weight: 300;
     background: url('../images/background.jpg.avif') no-repeat;
     background-attachment: fixed;
@@ -424,15 +430,76 @@ h1 {
 .categories ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    gap: 20px; /* Расстояние между категориями */
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    scrollbar-width: thin; /* Для Firefox */
+    -ms-overflow-style: none; /* Для Internet Explorer и Edge */
 }
 
-.categories ul li {
-    display: inline;
-    margin-right: 10px;
+.categories ul::-webkit-scrollbar {
+    height: 8px; /* Высота скроллбара */
+}
+
+.categories ul::-webkit-scrollbar-thumb {
+    background: #888; /* Цвет ползунка */
+    border-radius: 10px; /* Закругление ползунка */
+}
+
+.categories ul::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Цвет ползунка при наведении */
+}
+
+.categories ul::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Цвет трека скроллбара */
+    border-radius: 10px;
+}
+
+.category-item {
+    text-align: center;
+}
+
+.category-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-image {
+    width: 120px; /* Ширина изображений */
+    height: 120px;
+    margin: 10px;
+    transition: all 0.3s;
+}
+
+.category-link {
+    margin-top: 10px; /* Отступ между изображением и названием */
+    text-decoration: none;
+    font-size: 18px;
+    color: #d3d3d3; /* Цвет текста */
+}
+
+.category-item:hover a {
+    color: #b10000;
+}
+/* Активное состояние ссылки (можно также добавить выделение) */
+.category-link.active {
+    font-weight: bold;
+    color: red;
+}
+
+.category-item .category-link.active .category-image {
+    /* Увеличиваем тень для активного элемента */
+    filter: drop-shadow(0 0 5px rgb(219, 0, 0));
 }
 
 .tracks {
     padding: 20px;
+}
+
+.tracks h2 {
+    color: #a8a8a8;
 }
 
 .track-list {
@@ -443,8 +510,9 @@ h1 {
 
 .track {
     min-width: 200px;
-    width: 250px;
-    height: 400px; 
+    width: 200px;
+    min-height: 320px;
+    height: 350px; 
     background-color: #282828;
     border-radius: 10px;
     overflow: hidden; 
@@ -454,12 +522,13 @@ h1 {
 
 .track img {
     width: 100%;
-    height: 60%; 
+    height: 70%; 
     object-fit: cover; 
     border-radius: 10px 10px 0 0; 
 }
 
 .track-info {
+    text-align: center;
     flex-grow: 1; 
     padding: 10px; 
     color: white; 
@@ -467,6 +536,7 @@ h1 {
 
 .track-info h3 {
     margin: 0; 
+    margin-bottom: 10px;
 }
 
 audio {

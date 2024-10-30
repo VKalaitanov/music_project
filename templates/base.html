@@ -13,85 +13,85 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.7.0/hint.min.css'>
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <link type="text/css" href="{% static 'main/css/styles.css' %}" rel="stylesheet"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
 </head>
 <body>
 <div class="body-container">
     <header class="header">
-    <div class="header-container">
-        <div class="logo-div">
-            <a href="{% url 'main:home' %}">
-                <h1 class="logo">MUSIC</h1>
-            </a>
+        <div class="header-container">
+            <div class="logo-div">
+                <a href="{% url 'main:home' %}">
+                    <h1 class="logo">MUSIC</h1>
+                </a>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="auth">
+                <a href="{% url 'users:profile' %}">{{user.username}}</a> |
+                <a href="{% url 'users:logout' %}">Выйти</a>
+            </div>
+            {% else %}
+            <div class="auth">
+                <a href="{% url 'users:login' %}">Войти</a> |
+                <a href="{% url 'users:register' %}">Регистрация</a>
+            </div>
+            {% endif %}
         </div>
 
-        {% if user.is_authenticated %}
-        <div class="auth">
-            <a href="{% url 'users:profile' %}">{{user.username}}</a> |
-            <a href="{% url 'users:logout' %}">Выйти</a>
-        </div>
-        {% else %}
-        <div class="auth">
-            <a href="{% url 'users:login' %}">Войти</a> |
-            <a href="{% url 'users:register' %}">Регистрация</a>
-        </div>
-        {% endif %}
+    </header>
+    <!--Конец шапки профиля-->
+    <div class="music-background">
+
     </div>
+    <main class="main container-fluid">
+        {{ message }}
+        {% block content%}
 
-</header>
-<!--Конец шапки профиля-->
-<div class="music-background">
+        {% endblock %}
+    </main>
 
-</div>
-<main class="main container-fluid">
-    {{ message }}
-    {% block content%}
 
+    {% block navigation %}
     {% endblock %}
-</main>
 
-
-{% block navigation %}
-{% endblock %}
-
-<footer>
-    <div class="footer">
-        <div>
-            <span>&copy; Все права защищены!</span>
+    <footer>
+        <div class="footer">
+            <div>
+                <span>&copy; Все права защищены!</span>
+            </div>
+            <div class="social">
+                <ul>
+                    <li class="item">
+                        <a href="" aria-placeholder="Instagram">
+                            <i class="fa-brands fa-instagram social-icon" title="Instagram"></i>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="" aria-placeholder="VK">
+                            <i class="fa-brands fa-vk social-icon" title="VK"></i>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="" aria-placeholder="Github">
+                            <i class="fa-brands fa-github social-icon" title="Github"></i>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="" aria-placeholder="Telegram">
+                            <i class="fa-brands fa-telegram social-icon" title="Telegram"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="about-contacts">
+                <a href="{% url 'main:contacts' %}">Контакты</a>
+                <a href="{% url 'main:about' %}">О нас</a>
+            </div>
         </div>
-        <div class="social">
-            <ul>
-                <li class="item">
-                    <a href="" aria-placeholder="Instagram">
-                        <i class="fa-brands fa-instagram social-icon" title="Instagram"></i>
-                    </a>
-                </li>
-                <li class="item">
-                    <a href="" aria-placeholder="VK">
-                        <i class="fa-brands fa-vk social-icon" title="VK"></i>
-                    </a>
-                </li>
-                <li class="item">
-                    <a href="" aria-placeholder="Github">
-                        <i class="fa-brands fa-github social-icon" title="Github"></i>
-                    </a>
-                </li>
-                <li class="item">
-                    <a href="" aria-placeholder="Telegram">
-                        <i class="fa-brands fa-telegram social-icon" title="Telegram"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="about-contacts">
-            <a href="{% url 'main:contacts' %}">Контакты</a>
-            <a href="{% url 'main:about' %}">О нас</a>
-        </div>
-    </div>
-</footer>
+    </footer>
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -100,7 +100,6 @@
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
 
 </body>
 </html>

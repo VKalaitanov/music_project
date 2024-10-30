@@ -8,8 +8,13 @@
         <h2>Categories</h2>
         <ul>
             {% for category in categories %}
-            <li>
-                <a href="#" class="category-link" data-slug="{{ category.slug }}">{{ category.name }}</a>
+            <li class="category-item">
+                <a href="#" class="category-link" data-slug="{{ category.slug }}">
+                    <div class="category-content">
+                        <img src="{{ category.image.url }}" alt="" class="category-image">
+                        <p>{{ category.name.upper }}</p>
+                    </div>
+                </a>
             </li>
             {% endfor %}
         </ul>
@@ -17,7 +22,7 @@
 
     <!-- Tracks Section -->
     <section class="tracks">
-        <h2>Tracks</h2>
+        <h2>TRACKS</h2>
         <div class="track-list">
             {% for track in tracks %}
             <div class="track">
@@ -25,10 +30,6 @@
                 <div class="track-info">
                     <h3>{{ track.title }}</h3>
                     <p>Artist: <a href="#">{{ track.artist.name }}</a></p>
-                    <audio controls>
-                        <source src="{{ track.audio_file.url }}" type="audio/mpeg">
-                        Your browser does not support the audio tag.
-                    </audio>
                 </div>
             </div>
             {% endfor %}
@@ -66,12 +67,6 @@
                                     <div class="track-info">
                                         <h3>${track.title}</h3>
                                         <p>Artist: <a href="#">${track.artist}</a></p>
-                                        <p>Category: <a href="#">${track.category}</a></p>
-                                        <p>Duration: ${track.duration}</p>
-                                        <audio controls>
-                                            <source src="${track.audio_file}" type="audio/mpeg">
-                                            Your browser does not support the audio tag.
-                                        </audio>
                                     </div>
                                 </div>
                             `;
