@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for pl in playlist %}
+    <h1>{{ pl.title }}</h1>
+    <h1>{{ pl.tracks_count }}</h1>
+{% endfor %}
+{% endblock %}

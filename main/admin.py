@@ -1,11 +1,13 @@
 from django.contrib import admin
 from .models import Category, Artist, Track
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
+
 
 @admin.register(Artist)
 class ArtistAdmin(admin.ModelAdmin):
@@ -14,16 +16,17 @@ class ArtistAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ('name',)
 
+
 @admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
-    list_display = ('title', 'artist', 'category', 'duration', 'created_at')
+    list_display = ('title', 'artist', 'category', 'created_at')
     search_fields = ('title', 'artist__name')
     list_filter = ('artist', 'category')
     readonly_fields = ('created_at',)
     autocomplete_fields = ('artist', 'category')  # Позволяет выбрать из большого количества категорий и артистов
     fieldsets = (
         (None, {
-            'fields': ('title', 'artist', 'category', 'audio_file', 'cover_image', 'duration')
+            'fields': ('title', 'artist', 'category', 'audio_file', 'cover_image')
         }),
         ('Дополнительная информация', {
             'fields': ('created_at',),

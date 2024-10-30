@@ -1,3 +1,4 @@
+from django.conf.global_settings import EMAIL_HOST_USER
 from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -69,13 +70,13 @@ class RegisterUserView(FormView):
             f'Активация email на сайте {current_site}, если вы не регистрировались \n'
             f'на нашем сайте, игнорируйте это сообщение. \n'
             f'Иначе пожалуйста, перейдите по следующей ссылке, чтобы подтвердить \n'
-            f'свой адрес электронной почты: https://{current_site}{activation_url}'
+            f'свой адрес электронной почты: http://{current_site}{activation_url}'
         )
 
         send_mail(
             'Подтвердите свой электронный адрес',
             message,
-            'kalaytanov93@gmail.com',
+            EMAIL_HOST_USER,
             [user.email],
             fail_silently=False,
         )
@@ -133,5 +134,3 @@ class UserPasswordChangeView(PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy('users:password_change_done')
     template_name = 'users/password_change_form.html'
-
-

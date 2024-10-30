@@ -21,6 +21,11 @@
         <div class="track-list">
             {% for track in tracks %}
             <div class="track">
+                {% if user.is_authenticated %}
+                    <button onclick="showPlaylistsModal({{ track.id }})" class="btn btn-primary">Добавить в плейлист</button>
+                {% else %}
+                    <button class="btn btn-primary"><a href="{% url 'users:login' %}">Добавить в плейлист</a></button>
+                {% endif %}
                 <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
                 <div class="track-info">
                     <h3>{{ track.title }}</h3>
@@ -35,6 +40,26 @@
         </div>
     </section>
 </main>
+<!-- Модальное окно -->
+<div class="modal fade" id="playlistsModal" tabindex="-1" aria-labelledby="playlistsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="playlistsModalLabel">Выберите плейлист</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="playlists-list">
+                        {% for playlist in playlists %}
+                            <li>
+                                <button onclick="addTrackToPlaylist({{ playlist.id }})" class="btn btn-link">{{ playlist.title }}</button>
+                            </li>
+                        {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -67,7 +92,6 @@
                                         <h3>${track.title}</h3>
                                         <p>Artist: <a href="#">${track.artist}</a></p>
                                         <p>Category: <a href="#">${track.category}</a></p>
-                                        <p>Duration: ${track.duration}</p>
                                         <audio controls>
                                             <source src="${track.audio_file}" type="audio/mpeg">
                                             Your browser does not support the audio tag.
@@ -81,5 +105,37 @@
             });
         });
     });
+    let selectedTrackId = null;
+
+function showPlaylistsModal(trackId) {
+    selectedTrackId = trackId;
+    const playlistsModal = new bootstrap.Modal(document.getElementById('playlistsModal'));
+    playlistsModal.show();
+}
+
+function addTrackToPlaylist(playlistId) {
+    if (!selectedTrackId) return;
+
+    fetch("{% url 'playlists:add_track_to_playlist' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({
+            playlist_id: playlistId,
+            track_id: selectedTrackId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            const playlistsModal = bootstrap.Modal.getInstance(document.getElementById('playlistsModal'));
+            playlistsModal.hide();
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
 </script>
 {% endblock %}

@@ -27,12 +27,11 @@ class Track(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     audio_file = models.FileField(upload_to='tracks/')
     cover_image = models.ImageField(upload_to='covers/', blank=True, null=True)
-    duration = models.DurationField(blank=True, null=True)  # Поле для длительности трека
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         # Проверяем, что аудиофайл загружен и длительность не задана
-        if self.audio_file and not self.duration:
+        if self.audio_file:
             # Открываем аудиофайл с помощью mutagen
             audio = MutagenFile(self.audio_file)
             if audio and audio.info:
