@@ -39,7 +39,7 @@ class CreatePlaylistView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('playlists:me')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user  # Привязка плейлиста к текущему пользователю
+        form.instance.user = self.request.user
         response = super().form_valid(form)
         self.object.save()
         return response

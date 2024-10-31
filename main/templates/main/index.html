@@ -31,7 +31,7 @@
                 {% else %}
                     <button class="btn btn-primary"><a href="{% url 'users:login' %}">Добавить в плейлист</a></button>
                 {% endif %}
-                <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
+                <img src="{{ track.images.first.image.url }}" alt="{{ track.title }} cover image">
                 <div class="track-info">
                     <h3>{{ track.title }}</h3>
                     <p>Artist: <a href="#">{{ track.artist.name }}</a></p>
