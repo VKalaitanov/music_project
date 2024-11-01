@@ -4,7 +4,7 @@
     <h1>{{ playlist.title }}</h1>
     {% for track in playlist.tracks.all %}
         <div class="track">
-            <img src="{{ track.images.first.image.url }}" alt="{{ track.title }} cover image">
+            <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
             <div class="track-info">
                 <h3>{{ track.title }}</h3>
                 <audio controls class="track-audio">

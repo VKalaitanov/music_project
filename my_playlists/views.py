@@ -5,11 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from main.models import Track
 from .models import Playlist
-from .forms import CreatePlaylistForm
+from .forms import CreatePlaylistForm, UpdatePlaylistForm
+from .mixin import CRUDMixinPlaylist
 
 
 class MyPlaylistView(LoginRequiredMixin, ListView):
@@ -20,20 +21,11 @@ class MyPlaylistView(LoginRequiredMixin, ListView):
         return Playlist.objects.filter(user=self.request.user)
 
 
-class DetailMyPlaylistView(LoginRequiredMixin, DetailView):
+class DetailMyPlaylistView(CRUDMixinPlaylist, DetailView):
     template_name = 'my_playlists/detail_my_playlists.html'
-    context_object_name = 'playlist'
-    model = Playlist
-
-    def get_object(self, queryset=None):
-        obj = get_object_or_404(Playlist, pk=self.kwargs['playlist_pk'], user=self.request.user)
-        if not obj:
-            raise Http404("Плейлист не найден")
-        return obj
 
 
-class CreatePlaylistView(LoginRequiredMixin, CreateView):
-    model = Playlist
+class CreatePlaylistView(CRUDMixinPlaylist, CreateView):
     form_class = CreatePlaylistForm
     template_name = 'my_playlists/create_playlists.html'
     success_url = reverse_lazy('playlists:me')
@@ -43,6 +35,29 @@ class CreatePlaylistView(LoginRequiredMixin, CreateView):
         response = super().form_valid(form)
         self.object.save()
         return response
+
+    def get_object(self, queryset=None):
+        pass
+
+
+class UpdatePlaylistView(CRUDMixinPlaylist, UpdateView):
+    form_class = UpdatePlaylistForm
+    template_name = 'my_playlists/update_playlist.html'
+
+    def get_success_url(self):
+        return reverse_lazy('playlists:me')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # Убедимся, что только владелец может обновить трек
+        return super().form_valid(form)
+
+
+class DeletePlaylistView(CRUDMixinPlaylist, DeleteView):
+    template_name = 'my_playlists/delete_playlist.html'
+    success_url = reverse_lazy('playlists:me')
+
+    def get_queryset(self):
+        return Playlist.objects.filter(user=self.request.user)
 
 
 @login_required

@@ -2,9 +2,10 @@
 
 {% block content %}
 {% for pl in playlist %}
-    <h1>{{ pl.title }}</h1>
-    <h1>{{ pl.tracks_count }}</h1>
-    <h3>{{ pl.track.title }}</h3>
-    <a href="{{ pl.get_absolute_url }}">pl.title</a>
+    <h1>Название плейлиста: {{ pl.title }}</h1>
+    <h1>Количество треков в плейлисте: {{ pl.tracks_count }}</h1>
+    <a href="{{ pl.get_absolute_url }}">Перейти в плейлист</a>
+    <a href="{{ pl.delete_absolute_url }}">Удалить плейлист</a>
+
 {% endfor %}
 {% endblock %}
