@@ -7,7 +7,12 @@ from mutagen import File as MutagenFile
 class Category(models.Model):
     name = models.CharField('Название категории', max_length=100, unique=True)
     slug = models.SlugField('Слаг', max_length=100, unique=True)
-    image = models.ImageField('Изображение категории', default=None, null=True)
+    image = models.ImageField('Изображение категории', upload_to='category/', default=None, null=True)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -18,6 +23,11 @@ class Artist(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(upload_to='artists/', blank=True, null=True)
 
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -27,7 +37,6 @@ class Track(models.Model):
     artist = models.ForeignKey('Artist', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     audio_file = models.FileField(upload_to='tracks/')
-    cover_image = models.ImageField(upload_to='covers/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     duration = models.DurationField(null=True, blank=True)
 
@@ -42,7 +51,22 @@ class Track(models.Model):
                 # Преобразуем в формат timedelta
                 self.duration = datetime.timedelta(seconds=duration_in_seconds)
 
-        super(Track, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.audio_file:
+            self.audio_file.delete(save=False)
+        if self.cover_image:
+            self.cover_image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.title
+
+
+class TrackImage(models.Model):
+    track = models.ForeignKey(Track, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='covers/')
+
+    def __str__(self):
+        return f"Image for {self.track.title}"  # type: ignore

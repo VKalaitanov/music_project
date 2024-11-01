@@ -4,13 +4,7 @@
 {% for pl in playlist %}
     <h1>{{ pl.title }}</h1>
     <h1>{{ pl.tracks_count }}</h1>
-    <img src="{{ pl.track.cover_image.url }}" alt="{{ pl.track.title }} cover image">
-    <div class="track">
-        <img src="{{ pl.track.cover_image.url }}" alt="{{ pl.track.title }} cover image">
-        <div class="track-info">
-            <h3>{{ pl.track.title }}</h3>
-            <p>Artist: <a href="#">{{ pl.track.artist.name }}</a></p>
-        </div>
-    </div>
+    <h3>{{ pl.track.title }}</h3>
+    <a href="{{ pl.get_absolute_url }}">pl.title</a>
 {% endfor %}
 {% endblock %}
