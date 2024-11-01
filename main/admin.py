@@ -19,7 +19,7 @@ class ArtistAdmin(admin.ModelAdmin):
 
 @admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
-    list_display = ('title', 'artist', 'category', 'created_at')
+    list_display = ('title', 'artist', 'category', 'duration', 'created_at')
     search_fields = ('title', 'artist__name')
     list_filter = ('artist', 'category')
     readonly_fields = ('created_at',)

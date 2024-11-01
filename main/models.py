@@ -29,6 +29,7 @@ class Track(models.Model):
     audio_file = models.FileField(upload_to='tracks/')
     cover_image = models.ImageField(upload_to='covers/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    duration = models.DurationField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Проверяем, что аудиофайл загружен и длительность не задана

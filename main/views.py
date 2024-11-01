@@ -62,7 +62,8 @@ def load_tracks(request, slug):
             'artist': track.artist.name,
             'cover_image': track.cover_image.url,
             'is_authenticated': request.user.is_authenticated,
-            'login_url': reverse('users:login')
+            'login_url': reverse('users:login'),
+            'track_url': reverse('main:detail_track', args=[track.id])  # Добавлено
         })
 
     return JsonResponse({'tracks': track_list})

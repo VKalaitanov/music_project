@@ -27,14 +27,19 @@
             {% for track in tracks %}
             <div class="track">
                 {% if user.is_authenticated %}
-                    <button onclick="showPlaylistsModal({{ track.id }})" class="btn btn-primary">Добавить в плейлист</button>
+                <button onclick="showPlaylistsModal({{ track.id }})" class="btn btn-primary">Добавить в плейлист
+                </button>
                 {% else %}
-                    <button class="btn btn-primary"><a href="{% url 'users:login' %}">Добавить в плейлист</a></button>
+                <button class="btn btn-primary"><a href="{% url 'users:login' %}">Добавить в плейлист</a></button>
                 {% endif %}
                 <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
                 <div class="track-info">
-                    <h3>{{ track.title }}</h3>
-                    <p>Artist: <a href="#">{{ track.artist.name }}</a></p>
+                    <h3>
+                        <a href="{% url 'main:detail_track' track.id %}" class="track-link">
+                            {{ track.title }}
+                        </a>
+                    </h3>
+                    <p>Artist: {{ track.artist.name }}</p>
                 </div>
             </div>
             {% endfor %}
@@ -51,11 +56,13 @@
             </div>
             <div class="modal-body">
                 <ul id="playlists-list">
-                        {% for playlist in playlists %}
-                            <li>
-                                <button onclick="addTrackToPlaylist({{ playlist.id }})" class="btn btn-link">{{ playlist.title }}</button>
-                            </li>
-                        {% endfor %}
+                    {% for playlist in playlists %}
+                    <li>
+                        <button onclick="addTrackToPlaylist({{ playlist.id }})" class="btn btn-link">
+                            {{ playlist.title }}
+                        </button>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -97,10 +104,12 @@
                                         <button class="btn btn-primary"><a href="${track.login_url}">Добавить в плейлист</a></button>
                                     `}
                                     <img src="${track.cover_image}" alt="${track.title} cover image">
-                                    <div class="track-info">
-                                        <h3>${track.title}</h3>
-                                        <p>Artist: <a href="#">${track.artist}</a></p>
-                                    </div>
+                                    <a href="${track.track_url}" class="track-link">
+                                        <div class="track-info">
+                                            <h3>${track.title}</h3>
+                                            <p>Artist: <a href="#">${track.artist}</a></p>
+                                        </div>
+                                    </a>
                                 </div>
                             `;
                         });
@@ -113,35 +122,35 @@
 </script>
 
 <script>
-function showPlaylistsModal(trackId) {
-    selectedTrackId = trackId;
-    const playlistsModal = new bootstrap.Modal(document.getElementById('playlistsModal'));
-    playlistsModal.show();
-}
+    function showPlaylistsModal(trackId) {
+        selectedTrackId = trackId;
+        const playlistsModal = new bootstrap.Modal(document.getElementById('playlistsModal'));
+        playlistsModal.show();
+    }
 
-function addTrackToPlaylist(playlistId) {
-    if (!selectedTrackId) return;
+    function addTrackToPlaylist(playlistId) {
+        if (!selectedTrackId) return;
 
-    fetch("{% url 'playlists:add_track_to_playlist' %}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": "{{ csrf_token }}"
-        },
-        body: JSON.stringify({
-            playlist_id: playlistId,
-            track_id: selectedTrackId
+        fetch("{% url 'playlists:add_track_to_playlist' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                playlist_id: playlistId,
+                track_id: selectedTrackId
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        if (data.success) {
-            const playlistsModal = bootstrap.Modal.getInstance(document.getElementById('playlistsModal'));
-            playlistsModal.hide();
-        }
-    })
-    .catch(error => console.error("Error:", error));
-}
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.success) {
+                const playlistsModal = bootstrap.Modal.getInstance(document.getElementById('playlistsModal'));
+                playlistsModal.hide();
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
 </script>
 {% endblock %}
