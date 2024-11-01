@@ -37,6 +37,7 @@ class Track(models.Model):
     artist = models.ForeignKey('Artist', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     audio_file = models.FileField(upload_to='tracks/')
+    cover_image = models.ImageField(upload_to='covers/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     duration = models.DurationField(null=True, blank=True)
 
@@ -62,11 +63,3 @@ class Track(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class TrackImage(models.Model):
-    track = models.ForeignKey(Track, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='covers/')
-
-    def __str__(self):
-        return f"Image for {self.track.title}"  # type: ignore

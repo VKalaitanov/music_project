@@ -13,3 +13,9 @@ class Playlist(models.Model):
 
     def get_absolute_url(self):
         return reverse('playlists:me_pk', kwargs={'playlist_pk': self.pk})
+
+    def update_absolute_url(self):
+        return reverse('playlists:update_playlist', kwargs={'playlist_pk': self.pk})
+
+    def delete_absolute_url(self):
+        return reverse('playlists:delete_playlist', kwargs={'playlist_pk': self.pk})
