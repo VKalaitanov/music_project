@@ -1,11 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for pl in playlist %}
-    <h1>Название плейлиста: {{ pl.title }}</h1>
-    <h1>Количество треков в плейлисте: {{ pl.tracks_count }}</h1>
-    <a href="{{ pl.get_absolute_url }}">Перейти в плейлист</a>
-    <a href="{{ pl.delete_absolute_url }}">Удалить плейлист</a>
 
-{% endfor %}
+<div class="create-playlist-form">
+    <form method="post">
+        <h2>Создать новый плейлист</h2>
+        {% csrf_token %}
+        {{ create_form.as_p }}
+        <button type="submit">Создать плейлист</button>
+    </form>
+</div>
+
+<!-- Список плейлистов -->
+<div class="playlist-container">
+    {% for pl in playlist %}
+    <div class="playlist-card">
+        <h2 class="playlist-title">{{ pl.title }}</h2>
+        <p class="track-count">Треков в плейлисте: <span>{{ pl.tracks_count }}</span></p>
+        <div class="playlist-actions">
+            <a href="{{ pl.get_absolute_url }}" class="button view-button">Перейти в плейлист</a>
+            <button class="button delete-button" onclick="openDeleteModal('{{ pl.id }}')">Удалить плейлист</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div id="deletePlaylistModal" class="modal-delete">
+    <div class="modal-content">
+        <p>Вы уверены, что хотите удалить плейлист?</p>
+        <div class="modal-actions">
+            <button class="button confirm-button" onclick="confirmDelete()">Удалить</button>
+            <button class="button cancel-button" onclick="closeDeleteModal()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<script>
+  // Открытие модального окна удаления
+function openDeleteModal(playlistId) {
+    document.getElementById("deletePlaylistModal").style.display = "flex";
+    document.getElementById("deletePlaylistModal").dataset.playlistId = playlistId;
+}
+
+// Закрытие модального окна удаления
+function closeDeleteModal() {
+    document.getElementById("deletePlaylistModal").style.display = "none";
+}
+
+// Подтверждение удаления
+function confirmDelete() {
+    const playlistId = document.getElementById("deletePlaylistModal").dataset.playlistId;
+
+    fetch(`/playlists/delete/${playlistId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("Ошибка при удалении плейлиста.");
+        }
+    });
+    closeDeleteModal();
+}
+</script>
 {% endblock %}

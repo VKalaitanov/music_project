@@ -9,5 +9,6 @@ class CreatePlaylistForm(forms.ModelForm):
 
 
 class UpdatePlaylistForm(CreatePlaylistForm):
-    class Meta(CreatePlaylistForm.Meta):
-        pass
+    class Meta:
+        model = Playlist
+        fields = ['title']

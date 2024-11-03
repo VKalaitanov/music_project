@@ -9,5 +9,6 @@ urlpatterns = [
     path('add_track_to_playlist/', views.add_track_to_playlist, name='add_track_to_playlist'),  # add track to playlist
     path('create/', views.CreatePlaylistView.as_view(), name='create_playlist'),  # для создания плейлиста
     path('update/<int:playlist_pk>/', views.UpdatePlaylistView.as_view(), name='update_playlist'),  # для обвноления плейлиста
-    path('delete/<int:playlist_pk>/', views.DeletePlaylistView.as_view(), name='delete_playlist')  # для удаления плейлиста
+    path('delete/<int:playlist_pk>/', views.DeletePlaylistView.as_view(), name='delete_playlist'),  # для удаления плейлиста
+    path('remove_track/', views.remove_track_from_playlist, name='remove_track_from_playlist'), #удаление трека из плейлиста
 ]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Artist, Track
+from .models import Category, Artist, Track, Slides
 
 
 @admin.register(Category)
@@ -32,3 +32,6 @@ class TrackAdmin(admin.ModelAdmin):
             'fields': ('created_at',),
         }),
     )
+
+
+admin.site.register(Slides)

@@ -1,18 +1,134 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ playlist.title }}</h1>
-    {% for track in playlist.tracks.all %}
-        <div class="track">
+
+<div class="create-playlist-form">
+    <form method="post" id="updatePlaylistForm">
+        <h2>Изменить название плейлиста</h2>
+        {% csrf_token %}
+        {{ update_form.as_p }}
+        <button type="button" class="button update-button" onclick="openUpdateModal('{{ playlist.id }}')">
+            Изменить плейлист
+        </button>
+    </form>
+</div>
+
+<section class="tracks">
+    <h2>{{ playlist.title }}</h2>
+    <div class="track-list">
+        {% for track in playlist.tracks.all %}
+        <div class="track" id="track-{{ track.id }}">
             <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
-            <div class="track-info">
-                <h3>{{ track.title }}</h3>
-                <audio controls class="track-audio">
-                    <source src="{{ track.audio_file.url }}" type="audio/mpeg">
-                    Your browser does not support the audio tag.
-                </audio>
-                <p>Artist: <a href="#">{{ track.artist.name }}</a></p>
-            </div>
+            <a href="{% url 'main:detail_track' track.id %}" class="track-link">
+                <div class="track-info">
+                    <h3>{{ track.title }}</h3>
+                    <p>Artist: {{ track.artist.name }}</p>
+                </div>
+            </a>
+            <button class="btn btn-danger" onclick="openRemoveModal('{{ track.id }}', '{{ playlist.id }}')">Удалить</button>
         </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+</section>
+
+<div id="updatePlaylistModal" class="modal-update">
+    <div class="modal-content">
+        <p>Вы уверены, что хотите изменить название плейлиста?</p>
+        <div class="modal-actions">
+            <button class="button confirm-button" onclick="confirmUpdate()">Изменить</button>
+            <button class="button cancel-button" onclick="closeUpdateModal()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<div id="removeTrackModal" class="modal-remove">
+    <div class="modal-content">
+        <p>Вы уверены, что хотите удалить этот трек из плейлиста?</p>
+        <div class="modal-actions">
+            <button class="button confirm-button" onclick="confirmRemove()">Удалить</button>
+            <button class="button cancel-button" onclick="closeRemoveModal()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function openUpdateModal(playlistId) {
+        document.getElementById("updatePlaylistModal").style.display = "flex";
+    }
+
+    function closeUpdateModal() {
+        document.getElementById("updatePlaylistModal").style.display = "none";
+    }
+
+    function confirmUpdate() {
+        document.getElementById("updatePlaylistForm").submit(); // Отправка формы
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function openRemoveModal(trackId, playlistId) {
+        // Сохраняем ID трека и плейлиста для дальнейшего использования
+        window.currentTrackId = trackId;
+        window.currentPlaylistId = playlistId;
+        document.getElementById("removeTrackModal").style.display = "flex";
+    }
+
+    function closeRemoveModal() {
+        document.getElementById("removeTrackModal").style.display = "none";
+    }
+
+    function confirmRemove() {
+        removeTrackFromPlaylist(window.currentPlaylistId, window.currentTrackId); // Вызов функции удаления
+        closeRemoveModal(); // Закрыть модальное окно
+    }
+
+    function removeTrackFromPlaylist(playlistId, trackId) {
+        fetch('/playlists/remove_track/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),  // Получаем CSRF-токен
+            },
+            body: JSON.stringify({
+                playlist_id: playlistId,
+                track_id: trackId
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка сервера: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message); // Выводим сообщение пользователю
+            if (data.message === 'Трек удален из плейлиста') {
+                // Удаляем трек из DOM
+                const trackElement = document.getElementById(`track-${trackId}`);
+                if (trackElement) {
+                    trackElement.remove();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка: ' + error.message); // Уведомление пользователя об ошибке
+        });
+    }
+</script>
+
 {% endblock %}

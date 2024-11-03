@@ -3,16 +3,50 @@
 
 {% block content %}
 <div class="track-container">
-    <div class="track-cover">
-        <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
-    </div>
-    <div class="track-details">
-        <h2 class="track-artist">{{ track.artist.name }}</h2>
-        <p class="track-category">{{ track.title }}</p>
-        <audio controls class="track-audio">
-            <source src="{{ track.audio_file.url }}" type="audio/mpeg">
-            Your browser does not support the audio tag.
-        </audio>
+    <div class="track-plagin">
+        {% comment %}
+        <div class="track-cover">
+            <img src="{{ track.cover_image.url }}" alt="{{ track.title }} cover image">
+        </div>
+        {% endcomment %}
+
+        <div class="slide-show">
+            {% for slide in slides %}
+            <div class="slide">
+                <img src="{{ slide.image.url }}" alt="{{ slide.title }}">
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="track-details">
+            <h2 class="track-artist">{{ track.artist.name }}</h2>
+            <p class="track-title">{{ track.title }}</p>
+            <audio controls class="track-audio">
+                <source src="{{ track.audio_file.url }}" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+        </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach((slide) => {
+                slide.classList.remove('active'); // Убираем класс 'active' у всех слайдов
+            });
+            slides[index].classList.add('active'); // Показываем текущий слайд
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length; // Переключение на следующий слайд
+            showSlide(currentIndex);
+        }
+
+        showSlide(currentIndex); // Показываем первый слайд сразу
+        setInterval(nextSlide, 5000); // Смена слайда каждые 5 секунд
+    });
+</script>
 {% endblock %}

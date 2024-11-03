@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView
 
 from my_playlists.models import Playlist
-from .models import Track, Category
+from .models import Track, Category, Slides
 
 
 # Create your views here.
@@ -49,6 +49,22 @@ class DetailTrack(DetailView):
     model = Track
     template_name = 'main/detail_track.html'
     context_object_name = 'track'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['slides'] = Slides.objects.all()
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            track_data = {
+                'artist_name': self.object.artist.name,
+                'title': self.object.title,
+                'audio_file_url': self.object.audio_file.url,
+                'slides': [{'image_url': slide.image.url, 'title': slide.title} for slide in Slides.objects.all()],
+            }
+            return JsonResponse(track_data)
+        return super().render_to_response(context, **response_kwargs)
 
 
 def load_tracks(request, slug):

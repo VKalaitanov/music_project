@@ -26,10 +26,10 @@
                     <h1 class="logo">MUSIC</h1>
                 </a>
             </div>
-
             {% if user.is_authenticated %}
             <div class="auth">
-                <a href="{% url 'users:profile' %}">{{user.username}}</a> |
+                <a class="playlist-a" href="{% url 'playlists:me' %}">Мои плейлисты</a>
+                <a href="{% url 'users:profile' %}">Мой профиль</a> |
                 <a href="{% url 'users:logout' %}">Выйти</a>
             </div>
             {% else %}
