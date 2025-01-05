@@ -17,6 +17,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
@@ -30,6 +34,10 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Исполнитель"
+        verbose_name_plural = "Исполнители"
 
 
 class Track(models.Model):
@@ -64,6 +72,10 @@ class Track(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Трек"
+        verbose_name_plural = "Треки"
+
 
 class Slides(models.Model):
     title = models.CharField(max_length=200)
@@ -72,3 +84,7 @@ class Slides(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Слайд"
+        verbose_name_plural = "Слайды"
