@@ -257,7 +257,9 @@ form .link-form {
     text-align: start;
 }
 
-form a:hover, .change-password a:hover {text-shadow: 1px 1px 5px white;}
+form a:hover, .change-password a:hover {
+    color: red;
+}
 
 .form-error {
     color: rgb(255, 0, 0);
@@ -356,14 +358,23 @@ input[type="file"] {display: none;}
     text-align: center;
 }
 
-.change-password {
-    width: auto;
-    background-color: rgba(0, 0, 0, .6);
-    border: 1px solid black;
-    border-radius: 5px;
-    color: #fff;
-    padding: 10px;
+.change-password-block {
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
 }
+
+.change-password {
+    background-color: rgba(0, 0, 0, .6);
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    color: #fff;
+    padding: 12px;
+}
+
+.change-password p {font-size: 19px;}
 
 .change-password a {
     color: #740202;
