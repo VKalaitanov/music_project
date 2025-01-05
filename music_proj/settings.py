@@ -19,10 +19,12 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'igor-uspehov.com']
+ALLOWED_HOSTS = ['90.156.169.33', 'igor-uspehov.com', 'localhost', '127.0.0.1']
+
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
+    'http://90.156.169.33',
     'http://localhost',
     'https://igor-uspehov.com',
 ]
