@@ -27,6 +27,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://90.156.169.33',
     'http://localhost',
     'https://igor-uspehov.com',
+    'http://igor-uspehov.com'
 ]
 
 
