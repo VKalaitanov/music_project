@@ -21,7 +21,11 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'igor-uspehov.com']
 
-CSRF_TRUSTED_ORIGINS = ['localhost', '127.0.0.1', 'igor-uspehov.com']
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1',
+    'http://localhost',
+    'https://igor-uspehov.com',
+]
 
 
 # Application definition
