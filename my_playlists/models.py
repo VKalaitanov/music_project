@@ -24,3 +24,7 @@ class Playlist(models.Model):
 
     def __str__(self):
         return f'Пользователь {self.user.username}, плейлист {self.title}'
+
+    class Meta:
+        verbose_name = "Плейлист"
+        verbose_name_plural = "Плейлисты"
