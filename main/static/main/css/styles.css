@@ -29,7 +29,7 @@ body {
     font-variation-settings: "wdth" 100;
     width: 100%;
     height: auto;
-    padding: 50px;
+    padding: 0px;
     font-weight: 300;
     background: url('../images/background.jpg.avif') no-repeat;
     background-attachment: fixed;
@@ -444,11 +444,11 @@ h1 {
 }
 
 .categories h2 {
-    font-size: 50px;
+    font-size: 45px;
     color: #ffffff;
     text-shadow: 3px 4px 10px silver;
     position: absolute;
-    top: -50px;
+    top: -45px;
     z-index: 111;
 }
 
